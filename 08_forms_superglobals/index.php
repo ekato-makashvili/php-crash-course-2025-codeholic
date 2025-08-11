@@ -1,3 +1,9 @@
+<?php
+$contactsFile = "contacts.json";
+$contacts = file_exists($contactsFile) ? json_decode(file_get_contents($contactsFile), true) : [];
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,7 +14,18 @@
 </head>
 
 <body>
-<a href="create.php">Create new Contact</a>
+    <a href="create.php">Create new contact</a>
+<ul>
+    <?php foreach ($contacts as $contact): ?>
+        <li>
+            <img src="<?php echo $contact['image']; ?>" height="50">
+            <?php echo "{$contact['name']} - {$contact['email']} - {$contact['phone']}"; ?>
+            <a href="delete.php?id=<?php echo $contact['id'] ?>">
+                Delete
+            </a>
+        </li>
+    <?php endforeach; ?>
+</ul>
 </body>
 
 </html>
